@@ -94,7 +94,7 @@ class SmbSource(
                     remote.inputStream.use { i -> cache.outputStream().use { i.copyTo(it) } }
                 } finally { remote.close() }
             }
-            val u = UniversalArchive(cache, chapter.title)
+            val u = UniversalArchive(cache, chapter.title, context.cacheDir)
             try {
                 val bmp = u.page(index)
                 ByteArrayOutputStream().use { o ->

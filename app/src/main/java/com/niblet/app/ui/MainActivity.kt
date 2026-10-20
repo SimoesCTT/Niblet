@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         LastReadStore.prune(this)
         if (s.sourceId == "local") {
             startActivity(Intent(this, SeriesDetailActivity::class.java).apply {
+                putExtra("series_id", s.id)
                 putExtra("series_title", s.title)
             })
         } else {

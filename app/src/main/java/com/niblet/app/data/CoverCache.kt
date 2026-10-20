@@ -11,8 +11,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 object CoverCache {
-    private const val SIZE = 160
-
     private val mem = object : LruCache<String, Bitmap>(16 * 1024 * 1024) {
         override fun sizeOf(k: String, v: Bitmap) = v.byteCount
     }
@@ -47,7 +45,9 @@ object CoverCache {
         series: Series
     ): Bitmap? = withContext(Dispatchers.IO) {
         runCatching {
-            val chapters = source.listChapters(series.title)
+            // For the flat-folder case, seriesId is "local:root"
+            // For subfolder case, seriesId is "local:folder:name"
+            val chapters = source.listChapters(series.id)
             val first = chapters.firstOrNull() ?: return@withContext null
             val bytes = source.readPage(first, 0)
             val opts = BitmapFactory.Options().apply {

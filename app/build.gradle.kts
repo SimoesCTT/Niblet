@@ -3,15 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-android {
-    signingConfigs {
-        create("release") {
-            storeFile = file(System.getProperty("user.home") + "/.niblet-release.keystore")
-            storePassword = "niblet2026"
-            keyAlias = "niblet"
-            keyPassword = "niblet2026"
-        }
-    }
+android {    }
 
     namespace = "com.niblet.app"
     compileSdk = 35
@@ -45,7 +37,11 @@ dependencies {
     implementation("com.github.mwiede:jsch:0.2.18")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.github.junrar:junrar:7.5.4")
     implementation("io.coil-kt:coil:2.6.0")
     implementation("org.tukaani:xz:1.10")
+    implementation("org.slf4j:slf4j-api:1.7.36")
+    implementation("org.slf4j:slf4j-nop:1.7.36")
+    implementation("net.sf.sevenzipjbinding:sevenzipjbinding:16.02-2.01")
+    implementation("net.sf.sevenzipjbinding:sevenzipjbinding-all-platforms:16.02-2.01")
+    implementation("com.github.junrar:junrar:7.5.5")
 }

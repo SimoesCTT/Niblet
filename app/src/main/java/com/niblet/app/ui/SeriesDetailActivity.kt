@@ -17,6 +17,7 @@ class SeriesDetailActivity : AppCompatActivity() {
     private lateinit var adapter: ChapterAdapter
     private lateinit var source: LocalFolderSource
     private lateinit var seriesTitle: String
+    private lateinit var seriesId: String
     private var chapters: List<Chapter> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class SeriesDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         seriesTitle = intent.getStringExtra("series_title")!!
+        seriesId = intent.getStringExtra("series_id") ?: "local:folder:$seriesTitle"
         title = seriesTitle
 
         val treeUri = TreeStore.load(this) ?: run { finish(); return }
@@ -35,7 +37,7 @@ class SeriesDetailActivity : AppCompatActivity() {
         binding.chapters.adapter = adapter
 
         lifecycleScope.launch {
-            runCatching { source.listChapters(seriesTitle) }
+            runCatching { source.listChapters(seriesId) }
                 .onSuccess {
                     chapters = it
                     adapter.submit(it)

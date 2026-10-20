@@ -70,7 +70,7 @@ class ReaderNetworkActivity : AppCompatActivity() {
         }
         b.reader.onTapLeft = { prev() }
         b.reader.onTapRight = { next() }
-        b.reader.setOnLongClickListener { showMenu(); true }
+        b.reader.onLongPress = { showMenu() }
 
         if (SettingsStore.direction(this) == SettingsStore.Direction.WEBTOON) enableWebtoon()
         else if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE &&

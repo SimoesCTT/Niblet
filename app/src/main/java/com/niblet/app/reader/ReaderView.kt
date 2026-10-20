@@ -3,6 +3,8 @@ package com.niblet.app.reader
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -17,6 +19,7 @@ class ReaderView @JvmOverloads constructor(
 
     var onTapLeft: (() -> Unit)? = null
     var onTapRight: (() -> Unit)? = null
+    var onLongPress: (() -> Unit)? = null
     var direction: SettingsStore.Direction = SettingsStore.Direction.LTR
     var fit: SettingsStore.Fit = SettingsStore.Fit.PAGE
     var panelMode: Boolean = false
@@ -27,6 +30,13 @@ class ReaderView @JvmOverloads constructor(
     private var currentBmp: Bitmap? = null
     private var panels: List<PanelDetector.Panel> = emptyList()
     private var panelIndex = 0
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var longPressFired = false
+    private val longPressRunnable = Runnable {
+        longPressFired = true
+        onLongPress?.invoke()
+    }
 
     private val scale = ScaleGestureDetector(context,
         object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -41,6 +51,7 @@ class ReaderView @JvmOverloads constructor(
     private val tap = GestureDetector(context,
         object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                if (longPressFired) return true
                 if (panelMode && panels.size > 1) {
                     if (panelIndex < panels.size - 1) {
                         panelIndex++
@@ -112,19 +123,34 @@ class ReaderView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
-        scale.onTouchEvent(ev); tap.onTouchEvent(ev)
+        scale.onTouchEvent(ev)
+        tap.onTouchEvent(ev)
         if (!scale.isInProgress) {
             when (ev.actionMasked) {
-                MotionEvent.ACTION_DOWN -> { lastX = ev.x; lastY = ev.y; dragging = false }
+                MotionEvent.ACTION_DOWN -> {
+                    lastX = ev.x; lastY = ev.y; dragging = false
+                    longPressFired = false
+                    handler.postDelayed(longPressRunnable, 500)
+                }
                 MotionEvent.ACTION_MOVE -> {
-                    val dx = ev.x - lastX; val dy = ev.y - lastY
-                    if (abs(dx) + abs(dy) > 8f) dragging = true
+                    val dx = ev.x - lastX
+                    val dy = ev.y - lastY
+                    if (abs(dx) + abs(dy) > 12f) {
+                        dragging = true
+                        handler.removeCallbacks(longPressRunnable)
+                    }
                     if (dragging) {
-                        matrix.postTranslate(dx, dy); imageMatrix = matrix
+                        matrix.postTranslate(dx, dy)
+                        imageMatrix = matrix
                         lastX = ev.x; lastY = ev.y
                     }
                 }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    handler.removeCallbacks(longPressRunnable)
+                }
             }
+        } else {
+            handler.removeCallbacks(longPressRunnable)
         }
         return true
     }

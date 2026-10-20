@@ -89,7 +89,7 @@ class SftpSource(
             if (!cache.exists() || cache.length() == 0L) {
                 ch!!.get(chapter.fileUri, cache.absolutePath)
             }
-            val u = UniversalArchive(cache, chapter.title)
+            val u = UniversalArchive(cache, chapter.title, context.cacheDir)
             try {
                 val bmp = u.page(index)
                 ByteArrayOutputStream().use { o ->

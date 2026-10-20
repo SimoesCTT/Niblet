@@ -99,7 +99,7 @@ class WebDavSource(
                     cache.outputStream().use { resp.body!!.byteStream().copyTo(it) }
                 }
             }
-            val u = UniversalArchive(cache, chapter.title)
+            val u = UniversalArchive(cache, chapter.title, context.cacheDir)
             try {
                 val bmp = u.page(index)
                 ByteArrayOutputStream().use { o ->

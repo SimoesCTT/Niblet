@@ -35,7 +35,10 @@ class CbrReader(private val file: File) {
     private fun isImage(n: String): Boolean {
         val s = n.lowercase()
         return s.endsWith(".jpg") || s.endsWith(".jpeg") ||
-               s.endsWith(".png") || s.endsWith(".webp")
+               s.endsWith(".png") || s.endsWith(".webp") ||
+               s.endsWith(".bmp") || s.endsWith(".gif") ||
+               s.endsWith(".heif") || s.endsWith(".heic") ||
+               s.endsWith(".avif") || s.endsWith(".jp2") || s.endsWith(".j2k")
     }
 
     private fun naturalKey(name: String): String {
