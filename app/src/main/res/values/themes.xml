@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Niblet" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:textColorPrimary">@color/on_bg</item>
+        <item name="colorPrimary">@color/corn</item>
+    </style>
+</resources>

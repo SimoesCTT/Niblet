@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading direction (default)"
+            android:textColor="@color/corn"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="Direction">
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/directionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Fit">
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/fitSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Reader"
+            android:textColor="@color/corn"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/keepScreenOn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Keep screen on"
+            android:textColor="@color/on_bg"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/spreadMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Double-page spread (landscape)"
+            android:textColor="@color/on_bg"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/panelMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Panel-by-panel (experimental)"
+            android:textColor="@color/on_bg"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Stats"
+            android:textColor="@color/corn"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Pages read: 0"
+            android:textColor="@color/on_bg"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Reset stats"/>
+    </LinearLayout>
+</ScrollView>
